@@ -1,0 +1,19 @@
+version: "3"
+services:
+  auth-db-test:
+    image: library/postgres:12
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_DB: authdb
+    ports:
+      - 30001:5432
+
+  auth-db-app:
+    image: library/postgres:12
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_DB: authdb
+    ports:
+      - 30002:5432

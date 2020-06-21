@@ -1,2 +1,2 @@
-# micro-diary
-Micro diary is a service to save growing progress of a baby
+# Micro diary
+The micro diary is a service to save growing progress of a child

@@ -2,7 +2,9 @@ package net.de1mos.microdiary.authservice.views
 
 import net.de1mos.microdiary.authservice.domain.UserType
 import java.util.*
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.DiscriminatorValue
+import javax.persistence.Entity
 
 @Entity
 @DiscriminatorValue(UserType.VALUES.Internal)

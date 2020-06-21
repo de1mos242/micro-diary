@@ -2,11 +2,10 @@
 
 package net.de1mos.microdiary.authservice.domain
 
-import net.de1mos.microdiary.authservice.config.SecurityConfig
 import org.axonframework.test.aggregate.AggregateTestFixture
 import org.axonframework.test.aggregate.FixtureConfiguration
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd"
+>
+    <changeSet id="axon_tables" author="dyakovlev">
+        <createTable tableName="association_value_entry">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="association_value_entry_pkey"/>
+            </column>
+            <column name="association_key" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="association_value" type="varchar(255)"/>
+            <column name="saga_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="saga_type" type="varchar(255)"/>
+        </createTable>
+        <createIndex tableName="association_value_entry" indexName="saga_association_value_entry_idx">
+            <column name="saga_id"/>
+            <column name="saga_type"/>
+        </createIndex>
+        <createIndex tableName="association_value_entry" indexName="saga_assoc_association_value_entry_idx">
+            <column name="saga_type"/>
+            <column name="association_key"/>
+            <column name="association_value"/>
+        </createIndex>
+
+        <createTable tableName="domain_event_entry">
+            <column name="global_index" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="domain_event_entry_pkey"/>
+            </column>
+            <column name="event_identifier" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="meta_data" type="oid"/>
+            <column name="payload" type="oid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payload_revision" type="varchar(255)"/>
+            <column name="payload_type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="time_stamp" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aggregate_identifier" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sequence_number" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="varchar(255)"/>
+        </createTable>
+        <addUniqueConstraint tableName="domain_event_entry" columnNames="aggregate_identifier,sequence_number"/>
+
+        <createTable tableName="saga_entry">
+            <column name="saga_id" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="saga_entry_pkey"/>
+            </column>
+            <column name="revision" type="varchar(255)"/>
+            <column name="saga_type" type="varchar(255)"/>
+            <column name="serialized_saga" type="oid"/>
+        </createTable>
+
+        <createTable tableName="snapshot_event_entry">
+            <column name="aggregate_identifier" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sequence_number" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_identifier" type="varchar(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="meta_data" type="oid"/>
+            <column name="payload" type="oid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payload_revision" type="varchar(255)"/>
+            <column name="payload_type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="time_stamp" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="snapshot_event_entry"
+                       columnNames="aggregate_identifier,sequence_number,type"
+                       constraintName="snapshot_event_entry_pkey"/>
+
+        <createSequence sequenceName="hibernate_sequence" dataType="bigint"/>
+        <createTable tableName="token_entry">
+            <column name="processor_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="segment" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="owner" type="varchar(255)"/>
+            <column name="timestamp" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token" type="oid"/>
+            <column name="token_type" type="varchar(255)"/>
+        </createTable>
+        <addPrimaryKey tableName="token_entry" columnNames="processor_name,segment"/>
+    </changeSet>
+
+</databaseChangeLog>

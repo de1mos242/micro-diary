@@ -1,0 +1,19 @@
+version: "3"
+services:
+  md-user-profile-db-test:
+    image: library/postgres:12
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_DB: userprofiledb
+    ports:
+      - 30003:5432
+
+  md-user-profile-db-app:
+    image: library/postgres:12
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_DB: userprofiledb
+    ports:
+      - 30004:5432

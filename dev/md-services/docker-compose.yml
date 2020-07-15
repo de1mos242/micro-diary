@@ -24,3 +24,16 @@ services:
       - DB_PASSWORD=keycloak
     depends_on:
       - keycloak-db
+
+  zipkin-db:
+    image: openzipkin/zipkin-mysql
+
+  zipkin:
+    image: openzipkin/zipkin
+    environment:
+      - STORAGE_TYPE=mysql
+      - MYSQL_HOST=zipkin-db
+    ports:
+      - "9411:9411"
+    depends_on:
+      - zipkin-db

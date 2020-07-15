@@ -1,0 +1,3 @@
+rootProject.name = 'backend-root'
+
+include 'api-gateway', "family-service"

@@ -1,0 +1,9 @@
+server:
+  port: 8888
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9494/auth/realms/t1

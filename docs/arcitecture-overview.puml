@@ -1,0 +1,19 @@
+@startuml
+actor User
+
+
+cloud "GKE" {
+    database [Family Service Postgres]
+
+    agent [Keycloak]
+    agent [Api gateway]
+    [Ingress] --> [Keycloak]
+    [Ingress] --> [Api gateway]
+    [Api gateway] -> [Family service]
+    [Family service] ..> [Keycloak]
+    [Api gateway] --> [Keycloak]
+    [Family service] --> [Family Service Postgres]
+}
+[User] --> [Ingress]
+
+@enduml

@@ -1,6 +1,23 @@
+buildscript {
+    ext {
+        set('spring_boot_version', "2.3.1.RELEASE")
+        set('GAVerifierVersion', '2.2.3.RELEASE')
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_version}"
+        classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:${GAVerifierVersion}"
+    }
+}
+
+
 plugins {
     id 'org.springframework.boot' version '2.3.1.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id "org.springframework.cloud.contract" version "${GAVerifierVersion}"
+    id "groovy"
     id 'java'
 }
 
@@ -14,22 +31,31 @@ configurations {
     }
 }
 
+
 repositories {
     mavenCentral()
 }
 
 ext {
     set('springCloudVersion', "Hoxton.SR6")
+    set('axonVersion', "4.3.5")
+    set('GAVerifierVersion', "2.2.3.RELEASE")
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-//    implementation 'org.liquibase:liquibase-core'
+    implementation 'org.liquibase:liquibase-core'
     implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
     implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
+    implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
+
+    implementation("org.axonframework:axon-spring-boot-starter:${axonVersion}") {
+        exclude module: 'axon-server-connector'
+    }
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
@@ -37,14 +63,26 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+    testImplementation "org.axonframework:axon-test:${axonVersion}"
+    testImplementation "org.springframework.cloud:spring-cloud-stream-test-support"
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-verifier"
+
+    // https://mvnrepository.com/artifact/io.rest-assured/xml-path
+    testImplementation 'io.rest-assured:xml-path:4.3.1'
+
 }
 
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:${GAVerifierVersion}"
     }
 }
 
 test {
     useJUnitPlatform()
+}
+
+contracts {
+    baseClassForTests = 'net.de1mos.microdiary.familyservice.contract.MessageBase'
 }

@@ -7,4 +7,12 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:9494/auth/realms/t1
+          jwk-set-uri: http://localhost:9494/auth/realms/t1/protocol/openid-connect/certs
+  datasource:
+    url: jdbc:postgresql://localhost:25401/dbname
+    password: password
+    username: user
 
+
+  jackson:
+    property-naming-strategy: SNAKE_CASE

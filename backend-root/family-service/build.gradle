@@ -17,6 +17,7 @@ plugins {
     id 'org.springframework.boot' version '2.3.1.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id "org.springframework.cloud.contract" version "${GAVerifierVersion}"
+    id 'maven-publish'
     id "groovy"
     id 'java'
 }
@@ -47,6 +48,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+//    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.liquibase:liquibase-core'
     implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
     implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
@@ -66,6 +68,7 @@ dependencies {
     testImplementation "org.axonframework:axon-test:${axonVersion}"
     testImplementation "org.springframework.cloud:spring-cloud-stream-test-support"
     testImplementation "org.springframework.cloud:spring-cloud-starter-contract-verifier"
+    testImplementation "org.springframework.cloud:spring-cloud-contract-wiremock"
 
     // https://mvnrepository.com/artifact/io.rest-assured/xml-path
     testImplementation 'io.rest-assured:xml-path:4.3.1'
@@ -84,5 +87,8 @@ test {
 }
 
 contracts {
-    baseClassForTests = 'net.de1mos.microdiary.familyservice.contract.MessageBase'
+    baseClassForTests = 'net.de1mos.microdiary.familyservice.contract.RestBase'
+    baseClassMappings {
+        baseClassMapping('.*messaging.*', 'net.de1mos.microdiary.familyservice.contract.MessageBase')
+    }
 }

@@ -1,6 +1,22 @@
+buildscript {
+    ext {
+        set('spring_boot_version', "2.3.1.RELEASE")
+        set('GAVerifierVersion', '2.2.3.RELEASE')
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_version}"
+        classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:${GAVerifierVersion}"
+    }
+}
+
 plugins {
     id 'org.springframework.boot' version '2.3.1.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+//    id "org.springframework.cloud.contract" version "${GAVerifierVersion}"
+    id "groovy"
     id 'java'
 }
 
@@ -22,6 +38,7 @@ repositories {
 ext {
     set('springCloudVersion', "Hoxton.SR6")
     set('keycloakVersion', "10.0.2")
+    set('GAVerifierVersion', "2.2.3.RELEASE")
 }
 
 dependencies {
@@ -37,7 +54,6 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-security'
     implementation 'org.springframework.cloud:spring-cloud-stream'
     implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
-    implementation 'org.springframework.kafka:spring-kafka'
 
 //    implementation 'org.keycloak:keycloak-spring-boot-starter'
 
@@ -47,8 +63,12 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
-    testImplementation 'org.springframework.cloud:spring-cloud-stream-test-support'
-    testImplementation 'org.springframework.kafka:spring-kafka-test'
+    testImplementation "org.springframework.cloud:spring-cloud-stream-test-support"
+//    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-verifier"
+//    testImplementation "org.springframework.cloud:spring-cloud-contract-stub-runner"
+
+    // https://mvnrepository.com/artifact/io.rest-assured/xml-path
+    testImplementation 'io.rest-assured:xml-path:4.3.1'
 }
 
 dependencyManagement {

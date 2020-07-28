@@ -16,7 +16,12 @@ public class FamilyCommandListener {
 
     @StreamListener(value = FamilyMessageProcessor.INPUT, condition = "headers['type']=='CreateFamilyCommandMessage'")
     public void CreateFamilyCommandHandler(CreateFamilyCommand cmd) {
-        var command = new CreateNewFamilyCommand(cmd.getFamilyId(), cmd.getFamilyName(), cmd.getMemberId(), cmd.getUserId());
+        var command = CreateNewFamilyCommand.builder()
+                .familyId(cmd.getFamilyId())
+                .familyName(cmd.getFamilyName())
+                .memberId(cmd.getMemberId())
+                .userId(cmd.getUserId())
+                .build();
         commandGateway.send(command, (message, resultMessage) -> {
             if (resultMessage.isExceptional()) {
                 processor.errorChannel().send(MessageBuilder.withPayload(resultMessage.exceptionResult().getMessage()).build());

@@ -1,0 +1,11 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://whatever # see https://github.com/okta/samples-java-spring/issues/48
+
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
+

@@ -1,7 +1,8 @@
 package net.de1mos.microdiary.familyservice.contract;
 
-import net.de1mos.microdiary.familyservice.ContractTestApplication;
+import net.de1mos.microdiary.familyservice.ContractMessagingTestApplication;
 import net.de1mos.microdiary.familyservice.domain.commands.CreateNewFamilyCommand;
+import net.de1mos.microdiary.familyservice.services.FamilyService;
 import org.axonframework.commandhandling.CommandCallback;
 import org.axonframework.commandhandling.GenericCommandMessage;
 import org.axonframework.commandhandling.GenericCommandResultMessage;
@@ -16,13 +17,16 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ContractTestApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(classes = ContractMessagingTestApplication.class, webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @AutoConfigureMessageVerifier
-@ActiveProfiles(value = "test")
+@ActiveProfiles(value = "test-contract-messaging")
 public abstract class MessageBase {
 
     @MockBean
     CommandGateway commandGateway;
+
+    @MockBean
+    FamilyService familyService;
 
     @Before
     public void setUp() {

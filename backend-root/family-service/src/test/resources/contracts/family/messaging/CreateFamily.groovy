@@ -1,4 +1,4 @@
-package contracts.family
+package contracts.family.messaging
 
 import org.springframework.cloud.contract.spec.Contract
 
@@ -19,10 +19,10 @@ then:
     input {
         messageFrom("family.command")
         messageBody([
-                familyId  : "123",
-                familyName: "super family",
-                memberId: "456",
-                userId: "789"
+                family_id  : "123",
+                family_name: "super family",
+                member_id: "456",
+                user_id: "789"
         ])
         messageHeaders {
             header("type", "CreateFamilyCommandMessage")

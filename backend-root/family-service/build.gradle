@@ -66,12 +66,14 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     testImplementation "org.axonframework:axon-test:${axonVersion}"
+    testImplementation "org.springframework.security:spring-security-test"
     testImplementation "org.springframework.cloud:spring-cloud-stream-test-support"
     testImplementation "org.springframework.cloud:spring-cloud-starter-contract-verifier"
     testImplementation "org.springframework.cloud:spring-cloud-contract-wiremock"
 
     // https://mvnrepository.com/artifact/io.rest-assured/xml-path
     testImplementation 'io.rest-assured:xml-path:4.3.1'
+    testCompileOnly 'org.projectlombok:lombok'
 
 }
 

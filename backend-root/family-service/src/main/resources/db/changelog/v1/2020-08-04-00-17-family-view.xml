@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd"
+>
+    <changeSet id="family_view_tables" author="dyakovlev">
+        <createTable tableName="family_view">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="text">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="family_member_view">
+            <column name="member_id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="family_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createIndex tableName="family_member" indexName="membership_idx" unique="true">
+            <column name="user_id"/>
+            <column name="family_id"/>
+        </createIndex>
+
+        <createTable tableName="family_baby_view">
+            <column name="baby_id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="text">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+</databaseChangeLog>
